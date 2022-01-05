@@ -53,21 +53,6 @@ class ViewController: UIViewController {
     }
     
     private func getDataFromFile() {
-        let fetchRequest: NSFetchRequest<Car> = Car.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "mark != nil")
-        
-        var records = 0
-        
-        do {
-            records = try contex.count(for: fetchRequest)
-            print("Is Data there already")
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
-        
-        guard records == 0 else { return }
-        
-        //---
         guard let pathToFile = Bundle.main.path(forResource: "data", ofType: "plist"),
                 let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
         
@@ -104,7 +89,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getDataFromFile()
+        let defaults = UserDefaults.standard
+        
+        if defaults == defaults {
+            defaults.set(true, forKey: "Car")
+            print("userDefaults")
+            return
+        } else {
+            getDataFromFile()
+            print("getData")
+        }
+        
         
         let fetchRequest: NSFetchRequest<Car> = Car.fetchRequest()
         let mark = segmentedControl.titleForSegment(at: 0)
