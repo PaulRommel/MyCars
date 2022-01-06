@@ -11,6 +11,7 @@ import CoreData
 class ViewController: UIViewController {
     
     var contex: NSManagedObjectContext!
+    var car: Car!
     
     lazy var dateFormatter: DateFormatter = {
         let df = DateFormatter()
@@ -29,15 +30,55 @@ class ViewController: UIViewController {
     @IBOutlet weak var myChoiceImageView: UIImageView!
     
     @IBAction func segmenttedCtrlPressed(_ sender: UISegmentedControl) {
-        
     }
     
     @IBAction func startEnginePressed(_ sender: UIButton) {
+        car.timesDriven += 1
+        car.lastStarted = Date()
         
+        do {
+            try contex.save()
+            insertDataFrom(selectedCar: car)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
     }
     
     @IBAction func rateItPress(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "Rate it", message: "Rate this car please", preferredStyle: .alert)
+        let rateAction = UIAlertAction(title: "Rate", style: .default) { action in
+            if let text = alertController.textFields?.first?.text {
+                self.update(rating: (text as NSString).doubleValue)
+            }
+        }
         
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
+        
+        alertController.addTextField { textField in
+            textField.keyboardType = .numberPad
+        }
+        
+        alertController.addAction(rateAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func update(rating: Double) {
+        car.rating = rating
+        
+        do {
+            try contex.save()
+            insertDataFrom(selectedCar: car)
+        } catch let error as NSError {
+            let alertController = UIAlertController(title: "Wrong value", message: "Wrong input", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            
+            alertController.addAction(okAction)
+            
+            present(alertController, animated: true)
+            print(error.localizedDescription)
+        }
     }
     
     private func insertDataFrom(selectedCar car: Car) {
@@ -49,12 +90,27 @@ class ViewController: UIViewController {
         numberOfTripsLabel.text = "Number of trips: \(car.timesDriven)"
         
         lastTimeStartedLabel.text = "Last time started: \(dateFormatter.string(from: car.lastStarted!))"
-        segmentedControl.tintColor = car.tintColor as? UIColor
+        segmentedControl.backgroundColor = car.tintColor as? UIColor
     }
     
     private func getDataFromFile() {
+        let fetchRequest: NSFetchRequest<Car> = Car.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "mark != nil")
+        
+        var records = 0
+        
+        do {
+            records = try contex.count(for: fetchRequest)
+            print("Is Data there already?")
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
+        guard records == 0 else { return }
+        
+        
         guard let pathToFile = Bundle.main.path(forResource: "data", ofType: "plist"),
-                let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
+              let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
         
         for dictionary in dataArray {
             let entity = NSEntityDescription.entity(forEntityName: "Car", in: contex)
@@ -89,17 +145,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let defaults = UserDefaults.standard
-        
-        if defaults == defaults {
-            defaults.set(true, forKey: "Car")
-            print("userDefaults")
-            return
-        } else {
-            getDataFromFile()
-            print("getData")
-        }
-        
+        getDataFromFile()
         
         let fetchRequest: NSFetchRequest<Car> = Car.fetchRequest()
         let mark = segmentedControl.titleForSegment(at: 0)
@@ -107,7 +153,7 @@ class ViewController: UIViewController {
         
         do {
             let results = try contex.fetch(fetchRequest)
-            let car = results.first
+            car = results.first
             insertDataFrom(selectedCar: car!)
         } catch let error as NSError {
             print(error.localizedDescription)

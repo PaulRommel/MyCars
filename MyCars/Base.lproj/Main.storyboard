@@ -59,7 +59,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="startEnginePressed:" destination="dPO-Cy-q9y" eventType="touchUpInside" id="gPC-ij-gLx"/>
+                                    <action selector="startEnginePressed:" destination="dPO-Cy-q9y" eventType="touchUpInside" id="ewX-NG-Gff"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="myChoice" translatesAutoresizingMaskIntoConstraints="NO" id="ToI-Cy-9wL">
@@ -86,8 +86,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="rateItPress:" destination="dPO-Cy-q9y" eventType="touchUpInside" id="yf9-1g-wm2"/>
-                                    <action selector="rateItPressed:" destination="dPO-Cy-q9y" eventType="touchUpInside" id="8cF-Xh-Iff"/>
+                                    <action selector="rateItPress:" destination="dPO-Cy-q9y" eventType="touchUpInside" id="p1p-xr-vPc"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of trips: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z6A-b3-RO1">
@@ -106,7 +105,7 @@
                                     <segment title="BMW"/>
                                 </segments>
                                 <connections>
-                                    <action selector="segmenttedCtrlPressed:" destination="dPO-Cy-q9y" eventType="valueChanged" id="yWf-qr-VPJ"/>
+                                    <action selector="segmenttedCtrlPressed:" destination="dPO-Cy-q9y" eventType="valueChanged" id="AE1-gk-Fek"/>
                                 </connections>
                             </segmentedControl>
                         </subviews>
@@ -148,14 +147,14 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="carImageView" destination="y3a-NW-zqU" id="ZUq-Ou-kXz"/>
-                        <outlet property="lastTimeStartedLabel" destination="pNe-we-hUt" id="PqK-F9-C4Q"/>
-                        <outlet property="markLabel" destination="Dfe-Rj-7gg" id="OJB-n8-dBi"/>
-                        <outlet property="modelLabel" destination="YNi-HY-4jD" id="4c4-Z8-o0D"/>
-                        <outlet property="myChoiceImageView" destination="ToI-Cy-9wL" id="11R-DD-0a1"/>
-                        <outlet property="numberOfTripsLabel" destination="Z6A-b3-RO1" id="m83-v7-4Hp"/>
-                        <outlet property="ratingLabel" destination="8EN-b9-D5Z" id="bfg-7T-xaq"/>
-                        <outlet property="segmentedControl" destination="qpB-I9-Qc0" id="YYM-oB-4Gl"/>
+                        <outlet property="carImageView" destination="y3a-NW-zqU" id="CuT-9s-GDD"/>
+                        <outlet property="lastTimeStartedLabel" destination="pNe-we-hUt" id="l9G-Mz-Jsv"/>
+                        <outlet property="markLabel" destination="Dfe-Rj-7gg" id="hIJ-Nx-dPJ"/>
+                        <outlet property="modelLabel" destination="YNi-HY-4jD" id="HmK-oD-f6f"/>
+                        <outlet property="myChoiceImageView" destination="ToI-Cy-9wL" id="rBB-by-fId"/>
+                        <outlet property="numberOfTripsLabel" destination="Z6A-b3-RO1" id="4fA-fP-Wuh"/>
+                        <outlet property="ratingLabel" destination="8EN-b9-D5Z" id="gJ3-5q-2HQ"/>
+                        <outlet property="segmentedControl" destination="qpB-I9-Qc0" id="pRJ-ID-cBH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a2O-0g-wbs" sceneMemberID="firstResponder"/>
